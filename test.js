@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+app.use(express.json())
+
 const authRouter = require('./routes/authRoutes')
 app.use('/auth', authRouter)
 
@@ -13,7 +15,7 @@ username='dbUser'
 password='dbPassword123'
 clustername='cluster0.noxusbn.mongodb.net'
 databasename='JWTAuthTest'
-mongoose.connect('mongodb+srv://dbUser:dbPassword123@cluster0.noxusbn.mongodb.net/MongoLearning?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://dbUser:dbPassword123@cluster0.noxusbn.mongodb.net/JWTAuthTest?retryWrites=true&w=majority&appName=Cluster0')
 .then(()=>console.log("Connected to database"))
 .catch((error)=>console.log(error))
 
