@@ -3,6 +3,7 @@ const router=express.Router()
 
 const User = require('../model/usermodel')
 
+//Endpoint for register
 router.post('/register',async(req,res)=>{
     try{
         const {username,email,password} = req.body
@@ -13,8 +14,17 @@ router.post('/register',async(req,res)=>{
         res.status(400).json({error: 'User registration failed'})
     }
 })
-router.get('/login',(req,res)=>{
-    res.send('Logging in')
+
+//Endpoint for Login
+router.post('/login',async(req,res)=>{
+    const {username,email,password} = req.body
+    const user = await User.findOne({username})
+    if(!user || !(await user.comparePassword(password))){
+        return res.status(401).json({error: 'Invalid credentials'})
+    }
+    else{
+        res.status(201).json({message: 'Login Successful'})
+    }
 })
 
 //Endpoint for logout
