@@ -23,9 +23,20 @@ router.post('/login',async(req,res)=>{
     if(!user || !(await user.comparePassword(password))){
         return res.status(401).json({error: 'Invalid credentials'})
     }
-    else{
-        res.status(201).json({message: 'Login Successful'})
-    }
+    //Creating a token using JWT
+    //jwt.sign has three parameters, first payload which is the data that will be embedded, second the secret key used to sign the token and third options
+    const token = jwt.sign(
+        //Payload, _id is the id mongodb automatically assigns to every document
+        {userId: user._id, username: user.username},
+        //Secret key
+        process.env.JWT_SECRET,
+        //Options
+        {expiresIn: '1h'}
+    )
+    res.status(200).json({
+        message: 'Login successful',
+        token
+    })
 })
 
 //Endpoint for logout
