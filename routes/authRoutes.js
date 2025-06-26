@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router()
 
 const User = require('../model/usermodel')
+const jwt = require('jsonwebtoken')
 
 //Endpoint for register
 router.post('/register',async(req,res)=>{

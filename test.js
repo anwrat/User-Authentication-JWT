@@ -5,17 +5,15 @@ const port = 3000;
 
 app.use(express.json())
 
+//Importing dotenv
+require('dotenv').config()
+
 const authRouter = require('./routes/authRoutes')
 app.use('/auth', authRouter)
 
 const mongoose = require('mongoose');
 
-mongodbServer='mongodb+srv://'
-username='dbUser'
-password='dbPassword123'
-clustername='cluster0.noxusbn.mongodb.net'
-databasename='JWTAuthTest'
-mongoose.connect('mongodb+srv://dbUser:dbPassword123@cluster0.noxusbn.mongodb.net/JWTAuthTest?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO_URL)
 .then(()=>console.log("Connected to database"))
 .catch((error)=>console.log(error))
 
