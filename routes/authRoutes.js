@@ -3,6 +3,7 @@ const router=express.Router()
 
 const User = require('../model/usermodel')
 const jwt = require('jsonwebtoken')
+const requireAuth = require('../middlewares/authmiddleware')
 
 //Endpoint for register
 router.post('/register',async(req,res)=>{
@@ -42,6 +43,17 @@ router.post('/login',async(req,res)=>{
 //Endpoint for logout
 router.post('/logout',(req,res)=>{
     res.json({message: 'Logout successful'})
+})
+
+//Endpoint for displaying all users (requires auth)
+router.post('/view',requireAuth,async (req,res)=>{
+    try{
+        const users = await User.find({},'-password')
+        res.status(200).json(users)
+
+    } catch(err){
+        res.status(400).json({error:'Error while finding users',details:err})
+    }
 })
 
 module.exports=router //Exporting router as module file
