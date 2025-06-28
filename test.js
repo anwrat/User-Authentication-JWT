@@ -11,10 +11,7 @@ require('dotenv').config()
 const authRouter = require('./routes/authRoutes')
 app.use('/auth', authRouter)
 
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGO_URL)
-.then(()=>console.log("Connected to database"))
-.catch((error)=>console.log(error))
+const connectdb = require('./config/db')
+connectdb()
 
 app.listen(port, () => console.log(`Server running on port ${port}`))

@@ -40,7 +40,7 @@ router.post('/login',async(req,res)=>{
 })
 
 //Endpoint for logout
-router.get('/logout',(req,res)=>{
+router.post('/logout',(req,res)=>{
     res.json({message: 'Logout successful'})
 })
 
