@@ -11,6 +11,9 @@ require('dotenv').config()
 const authRouter = require('./routes/authRoutes')
 app.use('/auth', authRouter)
 
+const productRouter = require('./routes/productRoutes')
+app.use('/products',productRouter)
+
 const connectdb = require('./config/db')
 connectdb()
 
