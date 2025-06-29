@@ -29,4 +29,19 @@ router.delete('/delete/:productname',requireAuth,async(req,res)=>{
     }
 })
 
+//Filter product by category
+router.post('/category/:categoryName',requireAuth,async(req,res)=>{
+    try{
+        const {categoryName}= req.params
+        const products = await Products.find({category:categoryName})
+        if(products.length === 0){
+            return res.status(400).json({error:`No products were found under ${categoryName} category!!`})
+        }
+        res.status(200).json(products)
+
+    } catch(err){
+        res.status(400).json({error:'Failed to fetch products',details:err.message})
+    }
+})
+
 module.exports = router
