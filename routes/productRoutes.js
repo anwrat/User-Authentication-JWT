@@ -44,4 +44,26 @@ router.post('/category/:categoryName',requireAuth,async(req,res)=>{
     }
 })
 
+//Update product
+router.post('/update/:name',requireAuth,async(req,res)=>{
+    try{
+        const {name} = req.params
+        const updates = req.body
+        const updatedProduct = await Products.findOneAndUpdate({productname:name},updates,{
+            new:true //This returns the product
+            })
+        if(!updatedProduct){
+            return res.status(400).json({error:`Product ${name} was not found`})
+        }
+        res.status(201).json({
+            message:'Product updated successfully',
+            product: updatedProduct
+        })
+
+    } catch(err){
+        console.log(err)
+        res.status(400).json({error:'Error while updating product'})
+    }
+})
+
 module.exports = router
